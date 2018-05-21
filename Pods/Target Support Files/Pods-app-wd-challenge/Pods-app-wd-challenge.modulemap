@@ -1,0 +1,6 @@
+framework module Pods_app_wd_challenge {
+  umbrella header "Pods-app-wd-challenge-umbrella.h"
+
+  export *
+  module * { export * }
+}
