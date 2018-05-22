@@ -8,18 +8,48 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource {
 
+    let url = "https://www.wantedly.com/api/v1/projects?q=swift&page=1"
+    var offers = [Offer]()
+    
+    let table = UITableView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //テーブル
+        table.frame = view.frame
+        table.rowHeight = 200.0
+        view.addSubview(table)
+        table.dataSource = self
+        
+        offers = ApiClient().getOffers(url: url)
+        
+        for offer in offers{
+            print(offer.name)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
+    
+    //テーブル
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return offers.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.textLabel?.text = offers[indexPath.row].title
+        cell.detailTextLabel?.text = offers[indexPath.row].title?.description
 
+        cell.imageView?.image = UIImage.init(named: "cl")
+        
+        return cell
+    }
 }
 

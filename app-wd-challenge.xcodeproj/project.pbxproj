@@ -11,6 +11,7 @@
 		D69D0A1020B30C500044A666 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D0A0F20B30C500044A666 /* ViewController.swift */; };
 		D69D0A1520B30C500044A666 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D69D0A1420B30C500044A666 /* Assets.xcassets */; };
 		D69D0A1820B30C500044A666 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69D0A1620B30C500044A666 /* LaunchScreen.storyboard */; };
+		D69D0A2020B311150044A666 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D0A1F20B311150044A666 /* ApiClient.swift */; };
 		E009A9F73C7CC6083F923AA2 /* Pods_app_wd_challenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880E6AE3D383CB07661B95AA /* Pods_app_wd_challenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,7 @@
 		D69D0A1420B30C500044A666 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D69D0A1720B30C500044A666 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D69D0A1920B30C500044A666 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D69D0A1F20B311150044A666 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 			children = (
 				D69D0A0D20B30C500044A666 /* AppDelegate.swift */,
 				D69D0A0F20B30C500044A666 /* ViewController.swift */,
+				D69D0A1F20B311150044A666 /* ApiClient.swift */,
 				D69D0A1420B30C500044A666 /* Assets.xcassets */,
 				D69D0A1620B30C500044A666 /* LaunchScreen.storyboard */,
 				D69D0A1920B30C500044A666 /* Info.plist */,
@@ -179,9 +182,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-app-wd-challenge/Pods-app-wd-challenge-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -212,6 +220,7 @@
 			files = (
 				D69D0A1020B30C500044A666 /* ViewController.swift in Sources */,
 				D69D0A0E20B30C500044A666 /* AppDelegate.swift in Sources */,
+				D69D0A2020B311150044A666 /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
