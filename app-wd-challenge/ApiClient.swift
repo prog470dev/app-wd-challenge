@@ -15,14 +15,31 @@ public struct Offer{
     var description: String?
 }
 
+public extension Notification.Name {
+    public static let apiLoadStart = Notification.Name("ApiLoadStart")
+    public static let apiLoadComplete = Notification.Name("ApiLoadComplete")
+}
+
 class ApiClient {
- 
-    func getOffers(url: String) -> [Offer] {
-        var offers = [Offer]()
+    
+    static let instanc = ApiClient()
+    
+    var isLoading = false
+    var offers = [Offer]()
+    
+    private init(){}
+    
+    func getOffers(url: String){
         
-        let semaphore = DispatchSemaphore(value: 0)
-        let queue     = DispatchQueue.global(qos: .utility)
-        Alamofire.request(url, method: .get).responseJSON(queue: queue, completionHandler: {response in
+        var additionalOffers = [Offer]()
+        
+        guard !isLoading else { return }
+        
+        NotificationCenter.default.post(name: .apiLoadStart, object: nil)
+        
+        isLoading = true
+
+        Alamofire.request(url, method: .get).responseJSON(completionHandler: {response in
             
             guard let object = response.result.value else {
                 return
@@ -36,15 +53,14 @@ class ApiClient {
                 offer.name = company.1["company"]["name"].string
                 offer.description = company.1["description"].string
                 
-                offers.append(offer)
+                additionalOffers.append(offer)
             }
             
-            print("completionHandler")
-            semaphore.signal()
+            self.offers += additionalOffers
+            self.isLoading = false
+            
+            NotificationCenter.default.post(name: .apiLoadComplete, object: nil)
         })
         
-        semaphore.wait()
-        print("return offers")
-        return offers
     }
 }
