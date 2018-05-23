@@ -13,8 +13,12 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
     var backButton: UIBarButtonItem!
     var scrollView: UIScrollView!
     
+    var offer: Offer!
+    
     init(offer: Offer){
         super.init(nibName: nil, bundle: nil)
+        
+        self.offer = offer
         
         backButton = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(DetailViewController.back))
         self.navigationItem.leftBarButtonItem = backButton
@@ -26,28 +30,26 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         scrollView.delegate = self
         scrollView.frame.size = self.view.frame.size
         
-        let myImage = UIImage(named: "loading")!
-        
         //131*320
         let imageWidth:CGFloat = view.frame.width
         let imageHeight:CGFloat = 131.0 * (320.0 / imageWidth)
         
-        let myImageView = UIImageView(frame:  CGRect(x: 0,
+        let headerImageView = UIImageView(frame:  CGRect(x: 0,
                                                      y: 0,
                                                      width: imageWidth,
                                                      height: imageHeight))
         
         if let imagePath = offer.headerImagePath {
             print(imagePath)
-            myImageView.sd_setImage(with: URL(string: imagePath),
+            headerImageView.sd_setImage(with: URL(string: imagePath),
                                     placeholderImage: UIImage(named: "loading"),
                                     options: .retryFailed)
         }else{
-            myImageView.image = myImage
+            headerImageView.image = UIImage(named: "loading")
         }
         
         totalHeight += imageHeight
-        scrollView.addSubview(myImageView)
+        scrollView.addSubview(headerImageView)
         
         //タイトル
         let title: UILabel = UILabel(frame: CGRect(x: 0, y: totalHeight + 30, width: self.view.frame.width, height: 0))
@@ -67,7 +69,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         }else{
             avatarImageView.image = UIImage(named: "loading")
         }
-        //avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
+
         let pos = 10 + avatarImageView.frame.width + 20
         scrollView.addSubview(avatarImageView)
         
@@ -85,9 +87,23 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         scrollView.addSubview(description)
         totalHeight += description.frame.height + 30
         
+        totalHeight += 100   //応募フォームのための空間
         
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: totalHeight)
         self.view.addSubview(scrollView)
+        
+        //応募UI
+        let applicationLabel: UIButton = UIButton(frame: CGRect(x: self.view.frame.width/2 - 300/2,
+                                                   y: self.view.frame.height - 50 - 20,
+                                                   width: 300,
+                                                   height: 50))
+        applicationLabel.backgroundColor = UIColor.blue
+        applicationLabel.layer.masksToBounds = true
+        applicationLabel.layer.cornerRadius = 20.0
+        applicationLabel.setTitle("話を聞きに行きたい", for: .normal)
+        applicationLabel.setTitleColor(UIColor.white, for: .normal)
+        applicationLabel.addTarget(self, action: #selector(DetailViewController.onClickApplication(sender:)), for: .touchUpInside)
+        self.view.addSubview(applicationLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,6 +120,34 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
     
     @objc func back(){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func onClickApplication(sender: UIButton) {
+
+        let alertSheet = UIAlertController(title: self.offer.name,
+                                           message: self.offer.title,
+                                           preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        let action1 = UIAlertAction(title: "今すぐ一緒に働きたい", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) in
+            //TODO: ここでエントリーの最終確認
+        })
+        let action2 = UIAlertAction(title: "まずは話を聞いてみたい", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) in
+        })
+        let action3 = UIAlertAction(title: "少しだけ興味があります", style: UIAlertActionStyle.default, handler: {
+            (action: UIAlertAction!) in
+        })
+        let action4 = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: {
+            (action: UIAlertAction!) in
+        })
+        
+        alertSheet.addAction(action1)
+        alertSheet.addAction(action2)
+        alertSheet.addAction(action3)
+        alertSheet.addAction(action4)
+        
+        self.present(alertSheet, animated: true, completion: nil)
     }
     
     //
