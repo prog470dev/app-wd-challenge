@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
-
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+    
     var url = "https://www.wantedly.com/api/v1/projects?q=swift&page="
     var count = 1
     var isUseMaxIdex = false
     
     let table = UITableView()
+    var searchBar = UISearchBar()
     
     var loadDataObserver: NSObjectProtocol?
     
@@ -23,8 +24,24 @@ class ViewController: UIViewController, UITableViewDataSource {
         
         table.frame = view.frame
         table.rowHeight = 200.0
+        table.showsVerticalScrollIndicator = false
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget(self, action: #selector(ViewController.refresh(sender:)), for: .valueChanged)
+//        table.refreshControl = refreshControl
+        
         view.addSubview(table)
         table.dataSource = self
+        table.delegate = self
+        
+        searchBar.delegate = self
+        searchBar.frame = CGRect(x:0, y:0, width:self.view.frame.width, height:42)
+        searchBar.layer.position = CGPoint(x: self.view.bounds.width/2, y: 89)
+        searchBar.searchBarStyle = UISearchBarStyle.default
+        searchBar.showsSearchResultsButton = false
+        searchBar.placeholder = "キーワードを入力してください"
+        searchBar.setValue("キャンセル", forKey: "_cancelButtonText")
+        searchBar.tintColor = UIColor.cyan
+        table.tableHeaderView = searchBar
         
         if(ApiClient.instanc.offers.count == 0){
             ApiClient.instanc.getOffers(url: url + String(count))
@@ -44,6 +61,11 @@ class ViewController: UIViewController, UITableViewDataSource {
         super.didReceiveMemoryWarning()
     }
 
+//    @objc func refresh(sender: UIRefreshControl) {
+//        ApiClient.instanc.getOffers(url: url + String(count))
+//        sender.endRefreshing()
+//    }
+    
     
     // MARK: - UITableViewDataSource
     
@@ -60,7 +82,6 @@ class ViewController: UIViewController, UITableViewDataSource {
             }else{
                 count += 1
                 ApiClient.instanc.getOffers(url: url + String(count))
-
                 isUseMaxIdex = false
             }
         }
@@ -74,6 +95,19 @@ class ViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let detailViewController: UIViewController = DetailViewController(offer: ApiClient.instanc.offers[indexPath.row])
+        let detailViewController: UIViewController = UINavigationController(rootViewController: DetailViewController(offer: ApiClient.instanc.offers[indexPath.row]))
+        detailViewController.modalTransitionStyle = .crossDissolve
+        self.present(detailViewController, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - UISearchBarDelegate
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        //TODO: 検索機能
+    }
     
 }
 
