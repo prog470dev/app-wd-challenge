@@ -10,5 +10,6 @@ target 'app-wd-challenge' do
     pod 'SwiftyJSON'
     pod 'Alamofire', '~> 4.5'
     pod 'NVActivityIndicatorView'
+    pod ‘SDWebImage’
   
 end

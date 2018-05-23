@@ -8,10 +8,10 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SDWebImage
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
-    var url = "https://www.wantedly.com/api/v1/projects?q=swift&page="
     var count = 1
     var isUseMaxIdex = false
     
@@ -27,9 +27,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         table.frame = view.frame
         table.rowHeight = 200.0
         table.showsVerticalScrollIndicator = false
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget(self, action: #selector(ViewController.refresh(sender:)), for: .valueChanged)
-//        table.refreshControl = refreshControl
         
         view.addSubview(table)
         table.dataSource = self
@@ -53,7 +50,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         indicatorView.startAnimating()
         
         if(ApiClient.instanc.offers.count == 0){
-            ApiClient.instanc.getOffers(url: url + String(count))
+            ApiClient.instanc.getOffers(q: "Swift", page: count)
         }
         
         loadDataObserver = NotificationCenter.default.addObserver(
@@ -71,11 +68,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.didReceiveMemoryWarning()
     }
 
-//    @objc func refresh(sender: UIRefreshControl) {
-//        ApiClient.instanc.getOffers(url: url + String(count))
-//        sender.endRefreshing()
-//    }
-    
     
     // MARK: - UITableViewDataSource
     
@@ -91,7 +83,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 isUseMaxIdex = true
             }else{
                 count += 1
-                ApiClient.instanc.getOffers(url: url + String(count))
+                ApiClient.instanc.getOffers(q: "Swift", page: count)
                 isUseMaxIdex = false
             }
         }
@@ -100,13 +92,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.textLabel?.text = ApiClient.instanc.offers[indexPath.row].title//offers[indexPath.row].title
         cell.detailTextLabel?.text = ApiClient.instanc.offers[indexPath.row].title?.description //offers[indexPath.row].title?.description
 
-        cell.imageView?.image = UIImage.init(named: "cl")
+        if let imagePath = ApiClient.instanc.offers[indexPath.row].imagePath {
+            cell.imageView?.sd_setImage(with: URL(string: imagePath),
+                                        placeholderImage: UIImage(named: "loading"),
+                                        options: .retryFailed)
+        }else{
+            cell.imageView!.image = UIImage(named: "loading")
+        }
+
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let detailViewController: UIViewController = DetailViewController(offer: ApiClient.instanc.offers[indexPath.row])
         let detailViewController: UIViewController = UINavigationController(rootViewController: DetailViewController(offer: ApiClient.instanc.offers[indexPath.row]))
         detailViewController.modalTransitionStyle = .crossDissolve
         self.present(detailViewController, animated: true, completion: nil)
