@@ -40,7 +40,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.showsSearchResultsButton = false
         searchBar.placeholder = "キーワードを入力してください"
         searchBar.setValue("キャンセル", forKey: "_cancelButtonText")
-        searchBar.tintColor = UIColor.cyan
+        searchBar.tintColor = UIColor.blue
         table.tableHeaderView = searchBar
         
         if(ApiClient.instanc.offers.count == 0){
@@ -107,6 +107,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func updateSearchResults(for searchController: UISearchController) {
         //TODO: 検索機能
+    }
+    
+    // キャンセルボタンが押された時に呼ばれる
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        self.view.endEditing(true)
+        searchBar.text = ""
+        //self.table.reloadData()
+    }
+    
+    // テキストフィールド入力開始前に呼ばれる
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = true
+        return true
     }
     
 }
