@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -16,6 +17,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     let table = UITableView()
     var searchBar = UISearchBar()
+    var indicatorView: NVActivityIndicatorView!
     
     var loadDataObserver: NSObjectProtocol?
     
@@ -43,6 +45,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.tintColor = UIColor.blue
         table.tableHeaderView = searchBar
         
+        //ローディング
+        indicatorView = NVActivityIndicatorView(frame: CGRect(x: self.view.frame.width/2 - 50, y: self.view.frame.height/2 - 50, width: 100, height: 100),
+                                                type: NVActivityIndicatorType.ballPulse,//NVActivityIndicatorType.lineScale,
+                                                color: UIColor.gray)
+        view.addSubview(indicatorView)
+        indicatorView.startAnimating()
+        
         if(ApiClient.instanc.offers.count == 0){
             ApiClient.instanc.getOffers(url: url + String(count))
         }
@@ -53,6 +62,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             queue: nil,
             using: { notification in
                 self.table.reloadData()
+                self.indicatorView.removeFromSuperview()
             }
         )
     }
