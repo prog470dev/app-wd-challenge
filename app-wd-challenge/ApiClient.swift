@@ -15,6 +15,7 @@ public struct Offer{
     var description: String?
     
     var imagePath: String?
+    var headerImagePath: String?
     var looking_for: String?
     var avatarPath: String?
 }
@@ -60,13 +61,14 @@ class ApiClient {
                 offer.name = company.1["company"]["name"].string
                 offer.description = company.1["description"].string
                 
+                offer.headerImagePath = company.1["image"]["i_320_131"].string
                 offer.imagePath = company.1["image"]["i_50_50_x2"].string
                 offer.looking_for = company.1["looking_for"].string
                 offer.avatarPath = company.1["company"]["avatar"]["s_100"].string
                 
                 additionalOffers.append(offer)
                 
-//                print(company)
+                print(company)
             }
             
             self.offers += additionalOffers
