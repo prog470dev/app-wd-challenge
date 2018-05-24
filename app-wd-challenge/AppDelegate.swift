@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.makeKeyAndVisible()
-        self.window?.rootViewController = ViewController()
+        //self.window?.rootViewController = ViewController()
+        
+        //storyboardの情報を更かしてインスタンス化
+        let storyboard = UIStoryboard(name: "Storyboard", bundle: nil) //Storyboard.storyboard
+        self.window?.rootViewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController
         
         return true
     }

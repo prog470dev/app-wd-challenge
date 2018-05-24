@@ -97,7 +97,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
                                                    y: self.view.frame.height - 50 - 20,
                                                    width: 300,
                                                    height: 50))
-        applicationLabel.backgroundColor = UIColor.blue
+        applicationLabel.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         applicationLabel.layer.masksToBounds = true
         applicationLabel.layer.cornerRadius = 20.0
         applicationLabel.setTitle("話を聞きに行きたい", for: .normal)
@@ -148,17 +148,6 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         alertSheet.addAction(action4)
         
         self.present(alertSheet, animated: true, completion: nil)
-    }
-    
-    //
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // スクロール中の処理
-        //print("didScroll")
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        // ドラッグ開始時の処理
-        //print("beginDragging")
     }
 
 }

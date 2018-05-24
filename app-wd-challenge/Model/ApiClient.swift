@@ -32,12 +32,12 @@ class ApiClient {
     var isLoading = false
     var offers = [Offer]()
     
-    var url = "https://www.wantedly.com/api/v1/projects?"
+    var baseUrl = "https://www.wantedly.com/api/v1/projects?"
     private init(){}
     
     func getOffers(q: String, page: Int){
         
-        url += "q=" + q + "&page=" + String(page)
+        let url = baseUrl + "q=" + q + "&page=" + String(page)
         
         var additionalOffers = [Offer]()
         
@@ -80,20 +80,20 @@ class ApiClient {
     
     func getNewOffers(q: String){
         
-        url += "q=" + q + "&page=" + String(0)
+        print(q)
+        let url = baseUrl + "q=" + q + "&page=" + String(1)
         
         var additionalOffers = [Offer]()
         
-        guard !isLoading else { return }
+        //guard !isLoading else { return } //
         
         NotificationCenter.default.post(name: .apiLoadStart, object: nil)
         
         isLoading = true
         
+        print(url)
         Alamofire.request(url, method: .get).responseJSON(completionHandler: {response in
-            
-            print("call: getNewOffers(q: String)")
-            
+  
             guard let object = response.result.value else {
                 return
             }
@@ -116,7 +116,6 @@ class ApiClient {
                 //print(company)
             }
             
-            //self.offers += additionalOffers
             self.offers = additionalOffers
             self.isLoading = false
             
