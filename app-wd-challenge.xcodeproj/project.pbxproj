@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D62F3B7720B5399B00A3677E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62F3B7620B5399B00A3677E /* DetailViewController.swift */; };
+		D63A2FEC20B7ED2700BFDF53 /* TechKeysUitil.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63A2FEB20B7ED2700BFDF53 /* TechKeysUitil.swift */; };
 		D6408EED20B6D5EA006929E6 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6408EEC20B6D5EA006929E6 /* Storyboard.storyboard */; };
 		D6408EF120B6DFF7006929E6 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6408EF020B6DFF7006929E6 /* TableViewCell.swift */; };
 		D6408EF520B6F328006929E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6408EF420B6F328006929E6 /* MainViewController.swift */; };
@@ -24,6 +25,7 @@
 		880E6AE3D383CB07661B95AA /* Pods_app_wd_challenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_app_wd_challenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9388DB37631B24BF25C630CF /* Pods-app-wd-challenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-wd-challenge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-app-wd-challenge/Pods-app-wd-challenge.debug.xcconfig"; sourceTree = "<group>"; };
 		D62F3B7620B5399B00A3677E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		D63A2FEB20B7ED2700BFDF53 /* TechKeysUitil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechKeysUitil.swift; sourceTree = "<group>"; };
 		D6408EEC20B6D5EA006929E6 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		D6408EF020B6DFF7006929E6 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D6408EF420B6F328006929E6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				D6408EF620B72D69006929E6 /* View&ViewController */,
 				D6408EF720B7318A006929E6 /* Model */,
 				D69D0A0D20B30C500044A666 /* AppDelegate.swift */,
+				D63A2FEB20B7ED2700BFDF53 /* TechKeysUitil.swift */,
 				D69D0A1620B30C500044A666 /* LaunchScreen.storyboard */,
 				D6408EEC20B6D5EA006929E6 /* Storyboard.storyboard */,
 				D69D0A1920B30C500044A666 /* Info.plist */,
@@ -214,6 +217,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-app-wd-challenge/Pods-app-wd-challenge-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -221,6 +225,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -254,6 +259,7 @@
 				D6408EF120B6DFF7006929E6 /* TableViewCell.swift in Sources */,
 				D69D0A1020B30C500044A666 /* ViewController.swift in Sources */,
 				D69D0A0E20B30C500044A666 /* AppDelegate.swift in Sources */,
+				D63A2FEC20B7ED2700BFDF53 /* TechKeysUitil.swift in Sources */,
 				D6408EF520B6F328006929E6 /* MainViewController.swift in Sources */,
 				D69D0A2020B311150044A666 /* ApiClient.swift in Sources */,
 				D62F3B7720B5399B00A3677E /* DetailViewController.swift in Sources */,

@@ -11,5 +11,6 @@ target 'app-wd-challenge' do
     pod 'Alamofire', '~> 4.5'
     pod 'NVActivityIndicatorView'
     pod ‘SDWebImage’
+    pod 'SCLAlertView'
   
 end

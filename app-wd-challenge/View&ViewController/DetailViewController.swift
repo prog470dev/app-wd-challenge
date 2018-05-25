@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class DetailViewController: UIViewController, UIScrollViewDelegate{
     
@@ -130,13 +131,15 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         
         let action1 = UIAlertAction(title: "今すぐ一緒に働きたい", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) in
-            //TODO: ここでエントリーの最終確認
+            SCLAlertView().showInfo("応募完了", subTitle: "企業からの連絡をお待ちください。")
         })
         let action2 = UIAlertAction(title: "まずは話を聞いてみたい", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) in
+            SCLAlertView().showInfo("応募完了", subTitle: "企業からの連絡をお待ちください。")
         })
         let action3 = UIAlertAction(title: "少しだけ興味があります", style: UIAlertActionStyle.default, handler: {
             (action: UIAlertAction!) in
+            SCLAlertView().showInfo("応募完了", subTitle: "企業からの連絡をお待ちください。")
         })
         let action4 = UIAlertAction(title: "キャンセル", style: UIAlertActionStyle.cancel, handler: {
             (action: UIAlertAction!) in
