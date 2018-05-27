@@ -12,5 +12,13 @@ target 'app-wd-challenge' do
     pod 'NVActivityIndicatorView'
     pod ‘SDWebImage’
     pod 'SCLAlertView'
+    pod "TouchVisualizer", '~>3.0.0'
   
+end
+
+post_install do | installer |
+    require 'fileutils'
+    
+    FileUtils.cp_r('Pods/Target Support Files/Pods-app-wd-challenge/Pods-app-wd-challenge-Acknowledgements.plist', 'app-wd-challenge/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+    
 end

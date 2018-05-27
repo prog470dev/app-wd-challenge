@@ -38,6 +38,7 @@ class ApiClient {
     func getOffers(q: String, page: Int){
         
         let url = baseUrl + "q=" + q + "&page=" + String(page)
+        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         
         var additionalOffers = [Offer]()
         
@@ -47,14 +48,14 @@ class ApiClient {
         
         isLoading = true
 
-        Alamofire.request(url, method: .get).responseJSON(completionHandler: {response in
+        Alamofire.request(encodeUrl!, method: .get).responseJSON(completionHandler: {response in
             
             guard let object = response.result.value else {
                 return
             }
             
             let json = JSON(object)
-            
+
             for company in json["data"] {
                 var offer = Offer()
                 offer.title = company.1["title"].string
@@ -68,7 +69,6 @@ class ApiClient {
                 
                 additionalOffers.append(offer)
                 
-                //print(company)
             }
             
             self.offers += additionalOffers
@@ -82,17 +82,15 @@ class ApiClient {
         
         print(q)
         let url = baseUrl + "q=" + q + "&page=" + String(1)
+        let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         
         var additionalOffers = [Offer]()
-        
-        //guard !isLoading else { return } //
         
         NotificationCenter.default.post(name: .apiLoadStart, object: nil)
         
         isLoading = true
         
-        print(url)
-        Alamofire.request(url, method: .get).responseJSON(completionHandler: {response in
+        Alamofire.request(encodeUrl!, method: .get).responseJSON(completionHandler: {response in
   
             guard let object = response.result.value else {
                 return
@@ -112,8 +110,6 @@ class ApiClient {
                 offer.avatarPath = company.1["company"]["avatar"]["s_100"].string
                 
                 additionalOffers.append(offer)
-                
-                //print(company)
             }
             
             self.offers = additionalOffers
