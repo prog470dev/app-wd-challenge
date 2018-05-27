@@ -79,8 +79,6 @@ class ApiClient {
     }
     
     func getNewOffers(q: String){
-        
-        print(q)
         let url = baseUrl + "q=" + q + "&page=" + String(1)
         let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         

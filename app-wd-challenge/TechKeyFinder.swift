@@ -10,15 +10,12 @@ import Foundation
 
 class TechKeyFinder {
     
-    let techKeys:[String] = ["C言語", "C++", "Java", "Swift", "Kotlin", "Scala", "Go", "PHP", "Perl", "Ruby", "Python", "Rust", "Lisp",
-                             "", "",]
+    let techKeys:[String] = ["C言語", "C++", "Java", "Swift", "Kotlin", "Scala", "Go", "PHP", "Perl", "Ruby", "Python", "Rust", "Lisp", "Haskell"]
     
-    //詳細メッセージを受け取ってメッセージを形成して返す
     func displayString (description: String) -> String{
         return shapTechKeys(keys: extractionKeys (description: description))
     }
     
-    //詳細説明文から関連する技術キーワードを抽出する
     func extractionKeys (description: String) -> [String]{
         var retArray:[String] = []
         for var e in techKeys{
@@ -30,7 +27,6 @@ class TechKeyFinder {
         return retArray
     }
     
-    //キーワードのリストから表示文字列を作成
     func shapTechKeys(keys: [String]) -> String{
         var ret = ""
         var longestString = ""

@@ -12,7 +12,6 @@ target 'app-wd-challenge' do
     pod 'NVActivityIndicatorView'
     pod ‘SDWebImage’
     pod 'SCLAlertView'
-    pod "TouchVisualizer", '~>3.0.0'
   
 end
 

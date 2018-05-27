@@ -24,7 +24,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var loadDataObserverStart: NSObjectProtocol?
     var loadDataObserverComplete: NSObjectProtocol?
     
-    //追加機能
     var keysWindow: UILabel!
     var backView: UIView!
     
@@ -71,7 +70,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         )
         
-        //追加機能のための処理
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.cellLongPressed(recognizer:)))
         longPressRecognizer.delegate = self
         longPressRecognizer.minimumPressDuration = 0.3
@@ -82,7 +80,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.didReceiveMemoryWarning()
     }
     
-    //追加機能のための処理
     @objc func cellLongPressed(recognizer: UILongPressGestureRecognizer) {
         let point = recognizer.location(in: tableView)
         let indexPath = tableView.indexPathForRow(at: point)
@@ -177,7 +174,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if(ApiClient.instanc.offers.count < indexPath.row + 3){
-            //TODO: もっと適切なやり方があるはず
             if(!isUseMaxIdex){  //テーブルのリロード時にindexPathが自動的にリストの最大値になるため連続してAPIが呼ばれる現象への対処
                 isUseMaxIdex = true
             }else{

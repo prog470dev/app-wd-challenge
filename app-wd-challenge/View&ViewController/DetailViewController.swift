@@ -31,9 +31,8 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         scrollView.delegate = self
         scrollView.frame.size = self.view.frame.size
         
-        //131*320
         let imageWidth:CGFloat = view.frame.width
-        let imageHeight:CGFloat = 131.0 * (320.0 / imageWidth)
+        let imageHeight:CGFloat = 131.0 * (320.0 / imageWidth)  // 131*320: APIで与えられる画像のサイズ
         
         let headerImageView = UIImageView(frame:  CGRect(x: 0,
                                                      y: 0,
@@ -88,7 +87,7 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         scrollView.addSubview(description)
         totalHeight += description.frame.height + 30
         
-        totalHeight += 100   //応募フォームのための空間
+        totalHeight += 100 
         
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: totalHeight)
         self.view.addSubview(scrollView)
