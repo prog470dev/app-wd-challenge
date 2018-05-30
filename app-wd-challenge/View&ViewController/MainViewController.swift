@@ -47,29 +47,37 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                                 color: UIColor.gray)
         
         if(ApiClient.instanc.offers.count == 0){
-            ApiClient.instanc.getOffers(q: "", page: count)
+            ApiClient.instanc.getOffers(q: "",
+                                        page: count,
+                                        waiting: {
+                                            self.view.addSubview(self.indicatorView)
+                                            self.indicatorView.startAnimating()
+                                        },
+                                        completion: {
+                                            self.tableView.reloadData()
+                                            self.indicatorView.stopAnimating()
+                                            self.indicatorView.removeFromSuperview()
+            })
         }
         
-        loadDataObserverStart = NotificationCenter.default.addObserver(
-            forName: .apiLoadStart,
-            object: nil,
-            queue: nil,
-            using: { notification in
-                self.view.addSubview(self.indicatorView)
-                self.indicatorView.startAnimating()
-        }
-        )
-        
-        loadDataObserverComplete = NotificationCenter.default.addObserver(
-            forName: .apiLoadComplete,
-            object: nil,
-            queue: nil,
-            using: { notification in
-                self.tableView.reloadData()
-                self.indicatorView.stopAnimating()
-                self.indicatorView.removeFromSuperview()
-        }
-        )
+//        loadDataObserverStart = NotificationCenter.default.addObserver(
+//            forName: .apiLoadStart,
+//            object: nil,
+//            queue: nil,
+//            using: { notification in
+//                self.view.addSubview(self.indicatorView)
+//                self.indicatorView.startAnimating()
+//        })
+//
+//        loadDataObserverComplete = NotificationCenter.default.addObserver(
+//            forName: .apiLoadComplete,
+//            object: nil,
+//            queue: nil,
+//            using: { notification in
+//                self.tableView.reloadData()
+//                self.indicatorView.stopAnimating()
+//                self.indicatorView.removeFromSuperview()
+//        })
         
         //追加機能のための処理
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.cellLongPressed(recognizer:)))
@@ -182,7 +190,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 isUseMaxIdex = true
             }else{
                 count += 1
-                ApiClient.instanc.getOffers(q: "Swift", page: count)
+                //ApiClient.instanc.getOffers(q: "Swift", page: count)
+                ApiClient.instanc.getOffers(q: searchBar.text!,
+                                            page: count,
+                                            waiting: {
+                                                self.view.addSubview(self.indicatorView)
+                                                self.indicatorView.startAnimating()
+                },
+                                            completion: {
+                                                self.tableView.reloadData()
+                                                self.indicatorView.stopAnimating()
+                                                self.indicatorView.removeFromSuperview()
+                })
                 isUseMaxIdex = false
             }
         }
@@ -228,7 +247,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        ApiClient.instanc.getNewOffers(q: searchBar.text!)
+        ApiClient.instanc.getNewOffers(q: searchBar.text!,
+                                       waiting: {
+                                        self.view.addSubview(self.indicatorView)
+                                        self.indicatorView.startAnimating()
+                                        },
+                                       completion: {
+                                        self.tableView.reloadData()
+                                        self.indicatorView.stopAnimating()
+                                        self.indicatorView.removeFromSuperview()
+        })
         print(searchBar.text!)
         self.view.endEditing(true)
     }
