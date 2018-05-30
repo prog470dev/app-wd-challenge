@@ -31,9 +31,8 @@ class DetailViewController: UIViewController, UIScrollViewDelegate{
         scrollView.delegate = self
         scrollView.frame.size = self.view.frame.size
         
-        //131*320
         let imageWidth:CGFloat = view.frame.width
-        let imageHeight:CGFloat = 131.0 * (320.0 / imageWidth)
+        let imageHeight:CGFloat = 131.0 * (320.0 / imageWidth)  //131*320
         
         let headerImageView = UIImageView(frame:  CGRect(x: 0,
                                                      y: 0,

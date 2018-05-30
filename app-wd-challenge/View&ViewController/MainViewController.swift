@@ -17,7 +17,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var searchBar = UISearchBar()
     var count = 1
-    var isUseMaxIdex = false
+    var isUseMaxIndex = false
     
     var indicatorView: NVActivityIndicatorView!
     
@@ -46,8 +46,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                                 type: NVActivityIndicatorType.ballPulse,
                                                 color: UIColor.gray)
         
-        if(ApiClient.instanc.offers.count == 0){
-            ApiClient.instanc.getOffers(q: "",
+        if(ApiClient.Instance.offers.count == 0){
+            ApiClient.Instance.getOffers(q: "",
                                         page: count,
                                         waiting: {
                                             self.view.addSubview(self.indicatorView)
@@ -59,25 +59,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                             self.indicatorView.removeFromSuperview()
             })
         }
-        
-//        loadDataObserverStart = NotificationCenter.default.addObserver(
-//            forName: .apiLoadStart,
-//            object: nil,
-//            queue: nil,
-//            using: { notification in
-//                self.view.addSubview(self.indicatorView)
-//                self.indicatorView.startAnimating()
-//        })
-//
-//        loadDataObserverComplete = NotificationCenter.default.addObserver(
-//            forName: .apiLoadComplete,
-//            object: nil,
-//            queue: nil,
-//            using: { notification in
-//                self.tableView.reloadData()
-//                self.indicatorView.stopAnimating()
-//                self.indicatorView.removeFromSuperview()
-//        })
         
         //追加機能のための処理
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(MainViewController.cellLongPressed(recognizer:)))
@@ -134,7 +115,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func makeKeyWindow(index: Int) -> UILabel{
-        let keys = TechKeyFinder().extractionKeys(description: ApiClient.instanc.offers[index].description!)
+        let keys = TechKeyFinder().extractionKeys(description: ApiClient.Instance.offers[index].description!)
         var ret = ""
         for var i in 0..<keys.count {
             ret += keys[i]
@@ -170,7 +151,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController: UIViewController = UINavigationController(rootViewController: DetailViewController(offer: ApiClient.instanc.offers[indexPath.row]))
+        let detailViewController: UIViewController = UINavigationController(rootViewController: DetailViewController(offer: ApiClient.Instance.offers[indexPath.row]))
         detailViewController.modalTransitionStyle = .crossDissolve
         self.present(detailViewController, animated: true, completion: nil)
     }
@@ -179,19 +160,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ApiClient.instanc.offers.count
+        return ApiClient.Instance.offers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if(ApiClient.instanc.offers.count < indexPath.row + 3){
+        if(ApiClient.Instance.offers.count < indexPath.row + 3){
             //TODO: もっと適切なやり方があるはず
-            if(!isUseMaxIdex){  //テーブルのリロード時にindexPathが自動的にリストの最大値になるため連続してAPIが呼ばれる現象への対処
-                isUseMaxIdex = true
+            if(!isUseMaxIndex){  //テーブルのリロード時にindexPathが自動的にリストの最大値になるため連続してAPIが呼ばれる現象への対処
+                isUseMaxIndex = true
             }else{
                 count += 1
-                //ApiClient.instanc.getOffers(q: "Swift", page: count)
-                ApiClient.instanc.getOffers(q: searchBar.text!,
+                ApiClient.Instance.getOffers(q: searchBar.text!,
                                             page: count,
                                             waiting: {
                                                 self.view.addSubview(self.indicatorView)
@@ -202,18 +182,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                                 self.indicatorView.stopAnimating()
                                                 self.indicatorView.removeFromSuperview()
                 })
-                isUseMaxIdex = false
+                isUseMaxIndex = false
             }
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfferItem") as! TableViewCell
 
-        cell.taglabel.text = ApiClient.instanc.offers[indexPath.row].looking_for
-        cell.titleLabel.text = ApiClient.instanc.offers[indexPath.row].title
-        cell.descriptLabel.text = ApiClient.instanc.offers[indexPath.row].description
-        cell.nameLabel.text = ApiClient.instanc.offers[indexPath.row].name
+        cell.taglabel.text = ApiClient.Instance.offers[indexPath.row].looking_for
+        cell.titleLabel.text = ApiClient.Instance.offers[indexPath.row].title
+        cell.descriptLabel.text = ApiClient.Instance.offers[indexPath.row].description
+        cell.nameLabel.text = ApiClient.Instance.offers[indexPath.row].name
         
-        if let imagePath = ApiClient.instanc.offers[indexPath.row].headerImagePath {
+        if let imagePath = ApiClient.Instance.offers[indexPath.row].headerImagePath {
             cell.offerImage.sd_setImage(with: URL(string: imagePath),
                                         placeholderImage: UIImage(named: "loading"),
                                         options: .retryFailed)
@@ -221,7 +201,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.offerImage.image = UIImage(named: "loading")
         }
         
-        if let imagePath = ApiClient.instanc.offers[indexPath.row].avatarPath {
+        if let imagePath = ApiClient.Instance.offers[indexPath.row].avatarPath {
             cell.avatarImageView.sd_setImage(with: URL(string: imagePath),
                                          placeholderImage: UIImage(named: "loading"),
                                          options: .retryFailed)
@@ -247,7 +227,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        ApiClient.instanc.getNewOffers(q: searchBar.text!,
+        ApiClient.Instance.getNewOffers(q: searchBar.text!,
                                        waiting: {
                                         self.view.addSubview(self.indicatorView)
                                         self.indicatorView.startAnimating()
