@@ -11,8 +11,8 @@ import NVActivityIndicatorView
 import SDWebImage
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIGestureRecognizerDelegate {
-
-
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     var searchBar = UISearchBar()
@@ -48,12 +48,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if(ApiClient.Instance.offers.count == 0){
             ApiClient.Instance.getOffers(q: "",
-                                        page: count,
-                                        waiting: {
+                                         page: count,
+                                         waiting: {
                                             self.view.addSubview(self.indicatorView)
                                             self.indicatorView.startAnimating()
-                                        },
-                                        completion: {
+            },
+                                         completion: {
                                             self.tableView.reloadData()
                                             self.indicatorView.stopAnimating()
                                             self.indicatorView.removeFromSuperview()
@@ -66,7 +66,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         longPressRecognizer.minimumPressDuration = 0.3
         tableView.addGestureRecognizer(longPressRecognizer)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -172,12 +172,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }else{
                 count += 1
                 ApiClient.Instance.getOffers(q: searchBar.text!,
-                                            page: count,
-                                            waiting: {
+                                             page: count,
+                                             waiting: {
                                                 self.view.addSubview(self.indicatorView)
                                                 self.indicatorView.startAnimating()
                 },
-                                            completion: {
+                                             completion: {
                                                 self.tableView.reloadData()
                                                 self.indicatorView.stopAnimating()
                                                 self.indicatorView.removeFromSuperview()
@@ -187,7 +187,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "OfferItem") as! TableViewCell
-
+        
         cell.taglabel.text = ApiClient.Instance.offers[indexPath.row].looking_for
         cell.titleLabel.text = ApiClient.Instance.offers[indexPath.row].title
         cell.descriptLabel.text = ApiClient.Instance.offers[indexPath.row].description
@@ -203,15 +203,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if let imagePath = ApiClient.Instance.offers[indexPath.row].avatarPath {
             cell.avatarImageView.sd_setImage(with: URL(string: imagePath),
-                                         placeholderImage: UIImage(named: "loading"),
-                                         options: .retryFailed)
+                                             placeholderImage: UIImage(named: "loading"),
+                                             options: .retryFailed)
         }else{
             cell.avatarImageView.image = UIImage(named: "loading")
         }
         
         return cell
     }
-
+    
     
     // MARK: - UISearchBarDelegate
     
@@ -228,17 +228,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         ApiClient.Instance.getNewOffers(q: searchBar.text!,
-                                       waiting: {
-                                        self.view.addSubview(self.indicatorView)
-                                        self.indicatorView.startAnimating()
-                                        },
-                                       completion: {
-                                        self.tableView.reloadData()
-                                        self.indicatorView.stopAnimating()
-                                        self.indicatorView.removeFromSuperview()
+                                        waiting: {
+                                            self.view.addSubview(self.indicatorView)
+                                            self.indicatorView.startAnimating()
+        },
+                                        completion: {
+                                            self.tableView.reloadData()
+                                            self.indicatorView.stopAnimating()
+                                            self.indicatorView.removeFromSuperview()
         })
         print(searchBar.text!)
         self.view.endEditing(true)
     }
-
+    
 }
+
