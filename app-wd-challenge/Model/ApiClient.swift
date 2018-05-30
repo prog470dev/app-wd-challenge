@@ -9,6 +9,7 @@
 import Alamofire
 import SwiftyJSON
 
+// TODO: Codableを適用したい（ただし,APIの仕様が把握できていないので保留）
 public struct Offer{
     var title: String?
     var name: String?
@@ -35,7 +36,6 @@ class ApiClient {
     var baseUrl = "https://www.wantedly.com/api/v1/projects?"
     private init(){}
     
-    /////
     func getOffers(q: String, page: Int, waiting: (() -> ())?, completion: (() -> ())?){
         
         let url = baseUrl + "q=" + q + "&page=" + String(page)
